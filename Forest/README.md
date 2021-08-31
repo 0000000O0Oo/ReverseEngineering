@@ -143,7 +143,7 @@ for i in ALPHABEST:                                 # Another loop in ALPHABEST 
 
 FOURTH_VAL = ""                                     # Time for FOURTH VAL
 for i in ALPHABEST:                                 # Another Loop into Every ASCII Printable Characters
-    if ord(i) - 1 <= 0x71:                          # If the ordinal of our character -i <= 0x71 we found a good character and set our fourth value to it
+    if ord(i) - 1 <= 0x71:                          # If the ordinal of our character - 1 <= 0x71 we found a good character and set our fourth value to it
         FOURTH_VAL = i                              # set FOURTH_VAL = i
         break                                       # break
 
