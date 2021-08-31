@@ -13,9 +13,7 @@ To get a good definition of what is really Reverse Engineering i wen't on `wikip
 `understand through deductive reasoning how a device, process, system, or piece of software accomplishes a task with very little (if any) insight into 
 exactly how it does so.` 
 
-In our case, we're `Reverse Engineering programs (Binary Executables)`, but you can `reverse` pretty much anything that has been `engineered` in the first place.
-
-Note that we're going to do some pretty advanced stuff, if you have problem understanding anything you can reach out to me or use google.
+In our case, we're `Reverse Engineering programs (Binary Executables)`, to do that we're using `Decompilers`, `Debuggers`, `Disassemblers`, `Hex Editors`, `PE Structure Analysis tool` and many more... note that you can `reverse engineer` pretty much anything that has been `engineered` in the first place.
 
 ## How can i learn Reverse Engineering
 Learning Reverse Engineering can be a really daunting task to accomplish, but it's totally worth it...
