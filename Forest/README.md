@@ -166,7 +166,7 @@ LFLAG[9] = FLIP("68")
 LFLAG[10] = FLIP("6f")
 LFLAG[11] = FLIP("6f")
 LFLAG[12] = FLIP("64")
-print(''.join(LFLAG), end='')
+print(''.join(LFLAG), end='')                       # We don't want our string to end with a new line (\x0a) so we set end = nothing
 
 
 # ./forest <<<$(python3 solve.py)
