@@ -25,10 +25,11 @@ If you can't afford the 1$ paywall hit me up and i'll send you the PDFs.
 
 ## Where can i find Reverse Engineering Challenges
 There is a LOT of challenges online i do a lot of CrackMe and CTF Challenges and it truly helped me understand a lot more what im doing.
-Here's a couple of Website where you can practice :
-    - reversing.kr
-    - challenges.re
-    - crackmes.one <= My Favorite So Far
+
+Here are the main websites where you can practice :
+- reversing.kr
+- challenges.re
+- crackmes.one (Best one)
     
 These 3 platforms are the main ones we are going to use in this section.
 
