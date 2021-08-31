@@ -23,6 +23,8 @@ If you have dig in pretty much all of this, i think you're good to go.
 I would also highly consider reading the book offered at `https://beginners.re`, and practice the stuff you learned from that book on `https://challenges.re`
 If you can't afford the 1$ paywall hit me up and i'll send you the PDFs.
 
+Also, **READ THE INTEL MANUAL** if you're not sure about something.
+
 ## Where can i find Reverse Engineering Challenges
 There is a LOT of challenges online i do a lot of CrackMe and CTF Challenges and it truly helped me understand a lot more what im doing.
 
