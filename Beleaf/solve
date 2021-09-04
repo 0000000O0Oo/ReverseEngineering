@@ -25,6 +25,5 @@ dico = {
         }
 
 for i in array:
-    addr = hex(0x00301020 + (4*i))
-    print(dico[str(addr[2:])], end='')
+    print(dico[str(hex(0x00301020 + (4*i)))[2:]], end='')
 
