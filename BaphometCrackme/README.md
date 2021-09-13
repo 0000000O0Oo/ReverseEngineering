@@ -67,7 +67,7 @@ Let's check the functions our program uses...
 
 ![image](https://user-images.githubusercontent.com/61102077/133049935-281ad91e-0aff-47cf-89ab-8028bc085828.png)
 
-Alright we can see the function `main`, this is where we'll start reversing the program, let's `disass` main and you should have the following (the disassembly is quite large so i'm not gonna post the 1300 lines of assembly instructions in here...)
+Alright we can see the function `main`, this is where we'll start reversing the program, let's `disass` main and you should have the following (the disassembly is quite large so i'm not gonna post the 300+ lines of assembly instructions in here...)
 ```asm
 Dump of assembler code for function main:                                                                                                                   
    0x00000000000007ea <+0>:     push   rbp                                                                                                                       
@@ -123,7 +123,7 @@ Let's run the program and see in action the instructions we've just detailed
 
 We can see all the data that's being print before our `scanf` call in this case i have input `test` to our program, then the program seems to do another `scanf` but this time it asks us `What is the Forbidden Formula ?`
 
-Let's keep disassembling our code to understand much more what our program does, once again we'll go split by split because i don't want to detail 1300 asm instructions in a row for a reverse engineering challenge.
+Let's keep disassembling our code to understand much more what our program does, once again we'll go split by split because i don't want to detail +300 asm instructions in a row for a reverse engineering challenge.
 ```asm
    0x00005555554008b4 <+202>:   mov    DWORD PTR [rbp-0x4b4],0x0              ;define a new variable at rbp-0x4b4 and put 0x0 in it
    0x00005555554008be <+212>:   jmp    0x555555400965 <main+379>              ;jump to the beginning of a loop that starts at 0x555555400965                   
