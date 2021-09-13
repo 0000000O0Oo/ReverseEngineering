@@ -107,6 +107,9 @@ Dump of assembler code for function main:
 
 Yet the program has been pretty simple, we just load some values and print them, we also declare a couple of variables the program will eventually need
 ```
+[rbp-0x4c4] = argc
+[rbp-0x4d0] = argv
+[rbp-0x170] = ourInput
 [rbp-0x4b0] = 0x0    
 [rbp-0x490] = 0x89       
 [rbp-0x48c] = 0xbb 
@@ -122,10 +125,10 @@ We can see all the data that's being print before our `scanf` call in this case 
 
 Let's keep disassembling our code to understand much more what our program does, once again we'll go split by split because i don't want to detail 1300 asm instructions in a row for a reverse engineering challenge.
 ```asm
-   0x00005555554008b4 <+202>:   mov    DWORD PTR [rbp-0x4b4],0x0                                                                                            
-   0x00005555554008be <+212>:   jmp    0x555555400965 <main+379>                                                                                            
-   0x00005555554008c3 <+217>:   mov    eax,DWORD PTR [rbp-0x4b4]                                                                                            
-   0x00005555554008c9 <+223>:   cdqe                                                                                                                        
+   0x00005555554008b4 <+202>:   mov    DWORD PTR [rbp-0x4b4],0x0              ;define a new variable at rbp-0x4b4 and put 0x0 in it
+   0x00005555554008be <+212>:   jmp    0x555555400965 <main+379>              ;jump to the beginning of a loop that starts at 0x555555400965                   
+   0x00005555554008c3 <+217>:   mov    eax,DWORD PTR [rbp-0x4b4]              ;mov our current loop iterator into eax
+   0x00005555554008c9 <+223>:   cdqe                                          ;                                       
    0x00005555554008cb <+225>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]                                                                                       
    0x00005555554008d3 <+233>:   movsx  eax,al                                                                                                               
    0x00005555554008d6 <+236>:   mov    DWORD PTR [rbp-0x484],eax                                                                                            
@@ -156,9 +159,11 @@ Let's keep disassembling our code to understand much more what our program does,
    0x0000555555400955 <+363>:   imul   eax,edx
    0x0000555555400958 <+366>:   add    DWORD PTR [rbp-0x4a8],eax
    0x000055555540095e <+372>:   add    DWORD PTR [rbp-0x4b4],0x1
-   0x0000555555400965 <+379>:   mov    eax,DWORD PTR [rbp-0x4b4]
-   0x000055555540096b <+385>:   movsxd rbx,eax
-   0x000055555540096e <+388>:   lea    rax,[rbp-0x170]
-   0x0000555555400975 <+395>:   mov    rdi,rax
-   0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>
+   0x0000555555400965 <+379>:   mov    eax,DWORD PTR [rbp-0x4b4]          ;mov rbp-0x4b4 which is eq to 0 and is probably a loop counter
+   0x000055555540096b <+385>:   movsxd rbx,eax                            ;mov double word at eax into quadword at rbx with sign-extension
+   0x000055555540096e <+388>:   lea    rax,[rbp-0x170]                    ;rbp-0x170 is our input and we put it into rax for our call to strlen
+   0x0000555555400975 <+395>:   mov    rdi,rax                            ;mov our input into rdi for strlen call
+   0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>        ;call strlen, rax holds our return value which is the string length of rbp-0x170
+   0x000055555540097d <+403>:   cmp    rbx,rax                            ;we compare our current loop iterator number to our strlength
+   0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>          ;jump inside our loob since our iterator is below strlength 
 ```
