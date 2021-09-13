@@ -145,25 +145,25 @@ Let's keep disassembling our code to understand much more what our program does,
    0x000055555540090c <+290>:   idiv   DWORD PTR [rbp-0x488]                  ;this will divide EDX:EAX with the value at address [rbp-0x488] (EDX:EAX / [rbp-0x488]), rbp-0x488 has been declared at the beginning remember ?...                                                                       
    0x0000555555400912 <+296>:   mov    DWORD PTR [rbp-0x4ac],edx              ;mov remainder of our operation inside [rbp-0x4ac]
    0x0000555555400918 <+302>:   add    DWORD PTR [rbp-0x4b0],0x1              ;add 1 to our current loop iterator
-   0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]            ;mov the value at rbp-0x4b4 which is our first loop iterator into eax
-   0x0000555555400925 <+315>:   cdqe                                        ;sign extend eax to rax
-   0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]       ;mov the first character of our array into eax and zero extend eax
-   0x000055555540092f <+325>:   movsx  eax,al                               ;mov al into eax and sign extend it
-   0x0000555555400932 <+328>:   add    eax,0x4a                             ;add 0x4a to our character
-   0x0000555555400935 <+331>:   cmp    DWORD PTR [rbp-0x4b0],eax            ;so what happens here we check if our first character + 0x4a is equal to rbp-0x4b0 which is the current loop iterator (second loop) with eax, so we loop until i = (BYTE ourInputFirstCharacter + 0x4a)
-   0x000055555540093b <+337>:   jl     0x5555554008f4 <main+266>            ;jump back inside the loop as long as rbp-0x4b0 is less than (BYTE ourInputFirstCharacter + 0x4a)
-   0x000055555540093d <+339>:   mov    eax,DWORD PTR [rbp-0x4ac]
-   0x0000555555400943 <+345>:   imul   edx,eax,0x29a
-   0x0000555555400949 <+351>:   mov    eax,DWORD PTR [rbp-0x4ac]
-   0x000055555540094f <+357>:   imul   eax,eax,0x29a
-   0x0000555555400955 <+363>:   imul   eax,edx
-   0x0000555555400958 <+366>:   add    DWORD PTR [rbp-0x4a8],eax
-   0x000055555540095e <+372>:   add    DWORD PTR [rbp-0x4b4],0x1
-   0x0000555555400965 <+379>:   mov    eax,DWORD PTR [rbp-0x4b4]          ;mov rbp-0x4b4 which is eq to 0 and is probably a loop counter
-   0x000055555540096b <+385>:   movsxd rbx,eax                            ;mov double word at eax into quadword at rbx with sign-extension
-   0x000055555540096e <+388>:   lea    rax,[rbp-0x170]                    ;rbp-0x170 is our input and we put it into rax for our call to strlen
-   0x0000555555400975 <+395>:   mov    rdi,rax                            ;mov our input into rdi for strlen call
-   0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>        ;call strlen, rax holds our return value which is the string length of rbp-0x170
-   0x000055555540097d <+403>:   cmp    rbx,rax                            ;we compare our current loop iterator number to our strlength
-   0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>          ;jump inside our loop since our iterator is below strlength 
+   0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]              ;mov the value at rbp-0x4b4 which is our first loop iterator into eax
+   0x0000555555400925 <+315>:   cdqe                                          ;sign extend eax to rax
+   0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]         ;mov the first character of our array into eax and zero extend eax
+   0x000055555540092f <+325>:   movsx  eax,al                                 ;mov al into eax and sign extend it
+   0x0000555555400932 <+328>:   add    eax,0x4a                               ;add 0x4a to our character
+   0x0000555555400935 <+331>:   cmp    DWORD PTR [rbp-0x4b0],eax              ;so what happens here we check if our first character + 0x4a is equal to rbp-0x4b0 which is the current loop iterator (second loop) with eax, so we loop until i = (BYTE ourInputFirstCharacter + 0x4a)
+   0x000055555540093b <+337>:   jl     0x5555554008f4 <main+266>              ;jump back inside the loop as long as rbp-0x4b0 is less than (BYTE ourInputFirstCharacter + 0x4a)
+   0x000055555540093d <+339>:   mov    eax,DWORD PTR [rbp-0x4ac]              ;when the loop is done.. we move the value we obtained from the last iterations into eax       
+   0x0000555555400943 <+345>:   imul   edx,eax,0x29a                          ;EDX = EAX * 0x29a
+   0x0000555555400949 <+351>:   mov    eax,DWORD PTR [rbp-0x4ac]              ;take the same value as we just took ([rbp-0x4ac])
+   0x000055555540094f <+357>:   imul   eax,eax,0x29a                          ;EAX = EAX * 0x29a
+   0x0000555555400955 <+363>:   imul   eax,edx                                ;EDX:EAX = EAX * EDX
+   0x0000555555400958 <+366>:   add    DWORD PTR [rbp-0x4a8],eax              ;add our final result (EAX) to the value at [rbp-0x4a8]
+   0x000055555540095e <+372>:   add    DWORD PTR [rbp-0x4b4],0x1              ;add one to our loop
+   0x0000555555400965 <+379>:   mov    eax,DWORD PTR [rbp-0x4b4]              ;mov rbp-0x4b4 which is eq to 0 and is probably a loop counter
+   0x000055555540096b <+385>:   movsxd rbx,eax                                ;mov double word at eax into quadword at rbx with sign-extension
+   0x000055555540096e <+388>:   lea    rax,[rbp-0x170]                        ;rbp-0x170 is our input and we put it into rax for our call to strlen
+   0x0000555555400975 <+395>:   mov    rdi,rax                                ;mov our input into rdi for strlen call
+   0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>            ;call strlen, rax holds our return value which is the string length of rbp-0x170
+   0x000055555540097d <+403>:   cmp    rbx,rax                                ;we compare our current loop iterator number to our strlength
+   0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>              ;jump inside our loop since our iterator is below strlength 
 ```
