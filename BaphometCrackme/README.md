@@ -128,30 +128,30 @@ Let's keep disassembling our code to understand much more what our program does,
    0x00005555554008b4 <+202>:   mov    DWORD PTR [rbp-0x4b4],0x0              ;define a new variable at rbp-0x4b4 and put 0x0 in it
    0x00005555554008be <+212>:   jmp    0x555555400965 <main+379>              ;jump to the beginning of a loop that starts at 0x555555400965                   
    0x00005555554008c3 <+217>:   mov    eax,DWORD PTR [rbp-0x4b4]              ;mov our current loop iterator into eax
-   0x00005555554008c9 <+223>:   cdqe                                          ;                                       
-   0x00005555554008cb <+225>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]                                                                                       
-   0x00005555554008d3 <+233>:   movsx  eax,al                                                                                                               
-   0x00005555554008d6 <+236>:   mov    DWORD PTR [rbp-0x484],eax                                                                                            
-   0x00005555554008dc <+242>:   mov    eax,DWORD PTR [rbp-0x484]                                                                                            
-   0x00005555554008e2 <+248>:   mov    DWORD PTR [rbp-0x4ac],eax                                                                                            
-   0x00005555554008e8 <+254>:   mov    DWORD PTR [rbp-0x4b0],0x0                                                                                            
-   0x00005555554008f2 <+264>:   jmp    0x55555540091f <main+309>                                                                                            
-   0x00005555554008f4 <+266>:   mov    eax,DWORD PTR [rbp-0x490]                                                                                            
-   0x00005555554008fa <+272>:   imul   eax,DWORD PTR [rbp-0x4ac]                                                                                            
-   0x0000555555400901 <+279>:   mov    edx,eax                                                                                                              
-   0x0000555555400903 <+281>:   mov    eax,DWORD PTR [rbp-0x48c]                                                                                            
-   0x0000555555400909 <+287>:   add    eax,edx                                                                                                              
-   0x000055555540090b <+289>:   cdq                                                                                                                         
+   0x00005555554008c9 <+223>:   cdqe                                          ;sign extend eax to rax                                
+   0x00005555554008cb <+225>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]         ;[rbp+rax*1-0x170] contains an array and each element is 1 bytes in size, this instruction will take the first character of our input and put it into eax                                                     
+   0x00005555554008d3 <+233>:   movsx  eax,al                                 ;mov the character in hex at al into eax                                                                                  
+   0x00005555554008d6 <+236>:   mov    DWORD PTR [rbp-0x484],eax              ;mov the character into our [rbp-0x484] double word variable                       
+   0x00005555554008dc <+242>:   mov    eax,DWORD PTR [rbp-0x484]              ;mov the character [rbp-0x484] into eax
+   0x00005555554008e2 <+248>:   mov    DWORD PTR [rbp-0x4ac],eax              ;mov the character into rbp-0x4ac                                                   
+   0x00005555554008e8 <+254>:   mov    DWORD PTR [rbp-0x4b0],0x0              ;mov 0x0 into rbp-0x4b0
+   0x00005555554008f2 <+264>:   jmp    0x55555540091f <main+309>              ;start of another loop, so this is a loop inside a loop                      
+   0x00005555554008f4 <+266>:   mov    eax,DWORD PTR [rbp-0x490]              ;loop first instruction, it move [rbp-0x490] (0x89) into eax, remember we have defined this variable at the beginning of the program                                                                                
+   0x00005555554008fa <+272>:   imul   eax,DWORD PTR [rbp-0x4ac]              ;then we multiply [rbp-0x4ac] (0x00) with eax and store the value in EDX:EAX in this case we won't have to store anything in EDX, remember we have also declared rbp-0x4ac at the beginning of our program                 
+   0x0000555555400901 <+279>:   mov    edx,eax                                ;mov our multiplication result into edx                  
+   0x0000555555400903 <+281>:   mov    eax,DWORD PTR [rbp-0x48c]              ;mov [rbp-0x48c] (0xbb) into eax we have also declared this variable at the beginning                                    
+   0x0000555555400909 <+287>:   add    eax,edx                                ;add edx (our imul result) with eax (0xbb)                                  
+   0x000055555540090b <+289>:   cdq                                                                               
    0x000055555540090c <+290>:   idiv   DWORD PTR [rbp-0x488]                                                                                                
    0x0000555555400912 <+296>:   mov    DWORD PTR [rbp-0x4ac],edx
    0x0000555555400918 <+302>:   add    DWORD PTR [rbp-0x4b0],0x1
-   0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]
-   0x0000555555400925 <+315>:   cdqe   
-   0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]
-   0x000055555540092f <+325>:   movsx  eax,al
-   0x0000555555400932 <+328>:   add    eax,0x4a
-   0x0000555555400935 <+331>:   cmp    DWORD PTR [rbp-0x4b0],eax
-   0x000055555540093b <+337>:   jl     0x5555554008f4 <main+266>
+   0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]            ;mov the value at rbp-0x4b4 which is our first loop iterator into eax
+   0x0000555555400925 <+315>:   cdqe                                        ;sign extend eax to rax
+   0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]       ;mov the first character of our array into eax and zero extend eax
+   0x000055555540092f <+325>:   movsx  eax,al                               ;mov al into eax and sign extend it
+   0x0000555555400932 <+328>:   add    eax,0x4a                             ;add 0x4a to our character
+   0x0000555555400935 <+331>:   cmp    DWORD PTR [rbp-0x4b0],eax            ;so what happens here we check if our first character + 0x4a is equal to rbp-0x4b0 which is the current loop iterator (second loop) with eax, so we loop until i = (BYTE ourInputFirstCharacter + 0x4a)
+   0x000055555540093b <+337>:   jl     0x5555554008f4 <main+266>            ;jump back inside the loop as long as rbp-0x4b0 is less than (BYTE ourInputFirstCharacter + 0x4a)
    0x000055555540093d <+339>:   mov    eax,DWORD PTR [rbp-0x4ac]
    0x0000555555400943 <+345>:   imul   edx,eax,0x29a
    0x0000555555400949 <+351>:   mov    eax,DWORD PTR [rbp-0x4ac]
@@ -165,5 +165,5 @@ Let's keep disassembling our code to understand much more what our program does,
    0x0000555555400975 <+395>:   mov    rdi,rax                            ;mov our input into rdi for strlen call
    0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>        ;call strlen, rax holds our return value which is the string length of rbp-0x170
    0x000055555540097d <+403>:   cmp    rbx,rax                            ;we compare our current loop iterator number to our strlength
-   0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>          ;jump inside our loob since our iterator is below strlength 
+   0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>          ;jump inside our loop since our iterator is below strlength 
 ```
