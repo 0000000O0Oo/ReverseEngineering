@@ -189,16 +189,33 @@ while(true){
 }
 ```
 
+You can also transform the code in a python representation
+```py
+i = 0
+rVal = 0
+while True:
+    var1 = len(ourInput);
+    if var1 <= i:
+        break;
+    currChar = ord(ourInput[i])
+    for i in range(0, ord(ourInput[i]) + 0x4a):
+        currChar = (currChar * 0x89 + 0xbb) % 0x800
+    
+    rVal += currChar * 0x29a * currChar * 0x29a
+```
+
 We have defined some new variables, we now have the following variables declared
 ```
 [rbp-0x4c4] = argc
 [rbp-0x4d0] = argv
 [rbp-0x170] = ourInput
-[rbp-0x4b0] = 0x0    
-[rbp-0x490] = 0x89       
-[rbp-0x48c] = 0xbb 
-[rbp-0x488] = 0x800          
+[rbp-0x4b0] = for loop iterator    
+[rbp-0x490] = 0x89  
+[rbp-0x48c] = 0xbb  (used in for loop)
+[rbp-0x488] = 0x800 (used in for loop)          
 [rbp-0x484] = 0x0      
 [rbp-0x4ac] = CharacterBuffer (during algorithm, used a lot in second loop)        
-[rbp-0x4a8] = We use this variable to store the 
+[rbp-0x4a8] = We use this variable to store the value at each iteration on our while loop
 ```
+
+See not that complicated... before you continue make sure you've understand what we did so far, if you do not download the program and reverse it yourself you can compare it with my results and have a easier time solving the challenge
