@@ -141,10 +141,10 @@ Let's keep disassembling our code to understand much more what our program does,
    0x0000555555400901 <+279>:   mov    edx,eax                                ;mov our multiplication result into edx                  
    0x0000555555400903 <+281>:   mov    eax,DWORD PTR [rbp-0x48c]              ;mov [rbp-0x48c] (0xbb) into eax we have also declared this variable at the beginning                                    
    0x0000555555400909 <+287>:   add    eax,edx                                ;add edx (our imul result) with eax (0xbb)                                  
-   0x000055555540090b <+289>:   cdq                                                                               
-   0x000055555540090c <+290>:   idiv   DWORD PTR [rbp-0x488]                                                                                                
-   0x0000555555400912 <+296>:   mov    DWORD PTR [rbp-0x4ac],edx
-   0x0000555555400918 <+302>:   add    DWORD PTR [rbp-0x4b0],0x1
+   0x000055555540090b <+289>:   cdq                                           ;this will either zero out edx based on eax or sign extend edx based on eax
+   0x000055555540090c <+290>:   idiv   DWORD PTR [rbp-0x488]                  ;this will divide EDX:EAX with the value at address [rbp-0x488] (EDX:EAX / [rbp-0x488]), rbp-0x488 has been declared at the beginning remember ?...                                                                       
+   0x0000555555400912 <+296>:   mov    DWORD PTR [rbp-0x4ac],edx              ;mov remainder of our operation inside [rbp-0x4ac]
+   0x0000555555400918 <+302>:   add    DWORD PTR [rbp-0x4b0],0x1              ;add 1 to our current loop iterator
    0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]            ;mov the value at rbp-0x4b4 which is our first loop iterator into eax
    0x0000555555400925 <+315>:   cdqe                                        ;sign extend eax to rax
    0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]       ;mov the first character of our array into eax and zero extend eax
