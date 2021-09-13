@@ -168,6 +168,7 @@ Let's keep disassembling our code to understand much more what our program does,
    0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>              ;jump inside our loop since our iterator is below strlength 
 ```
 OKAY... so this was a lot harder...
+
 **Do not worry if you haven't understand the whole block of code yet**, i will put the source of the assembly block and you can compare the source with the assembly to understand what actually happens.
 ```cpp
 [rbp-0x4b4] = 0;
@@ -177,7 +178,7 @@ while(true){
         break;
     [rbp-0x4ac] = (int)[rbp-0x170[rbp-0x4b4]] //Here we access value at (rbp-0x170[rbp-0x4b4])
     for([rbp-0x4b0] = 0; (int)[rbp-0x4b0] < ([rbp-0x170[ebp-0x4b4]] + 0x4a) ; [rbp-0x4b0]++){
-      
+        [rbp-0x4ac] = ()
     }
     
 }
