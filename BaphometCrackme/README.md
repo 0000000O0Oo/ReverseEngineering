@@ -171,6 +171,9 @@ OKAY... so this was a lot harder...
 
 **Do not worry if you haven't understand the whole block of code yet**, i will put the source of the assembly block and you can compare the source with the assembly to understand what actually happens.
 ```cpp
+//Take the time to understand the syntax because i just invented it... or maybe not, i can't be sure about that.
+[rbp-0x4a8] = 0;
+...
 [rbp-0x4b4] = 0;
 while(true){
     var1 = strlen([rbp-0x170]);
@@ -178,8 +181,10 @@ while(true){
         break;
     [rbp-0x4ac] = (int)[rbp-0x170[rbp-0x4b4]] //Here we access value at (rbp-0x170[rbp-0x4b4])
     for([rbp-0x4b0] = 0; (int)[rbp-0x4b0] < ([rbp-0x170[ebp-0x4b4]] + 0x4a) ; [rbp-0x4b0]++){
-        [rbp-0x4ac] = ()
+        [rbp-0x4ac] = ([rbp-0x4ac] * 0x89 + 0xbb) % 0x800;
     }
+    [rbp-0x4a8] = [rbp-0x4a8] + [rbp-0x4ac] * 0x29a * [rbp-0x4ac] * 0x29a;
+    [rbp-0x4b4]++;
     
 }
 ```
