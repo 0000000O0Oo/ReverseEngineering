@@ -81,26 +81,26 @@ Dump of assembler code for function main:
    0x0000000000000810 <+38>:    xor    eax,eax                                               ;stack canary                                                  
    0x0000000000000812 <+40>:    lea    rdi,[rip+0x62f]        # 0xe48                        ;load string at address 0xe48 into rdi                     
    0x0000000000000819 <+47>:    call   0x670 <puts@plt>                                      ;print that string                         
-   0x000000000000081e <+52>:    mov    DWORD PTR [rbp-0x4b0],0x0                             ;                                            
-   0x0000000000000828 <+62>:    mov    DWORD PTR [rbp-0x490],0x89                                                                                           
-   0x0000000000000832 <+72>:    mov    DWORD PTR [rbp-0x48c],0xbb                                                                                           
-   0x000000000000083c <+82>:    mov    DWORD PTR [rbp-0x488],0x800                                                                                          
-   0x0000000000000846 <+92>:    mov    DWORD PTR [rbp-0x484],0x0                                                                                            
-   0x0000000000000850 <+102>:   mov    DWORD PTR [rbp-0x4ac],0x0                                                                                            
-   0x000000000000085a <+112>:   mov    DWORD PTR [rbp-0x4a8],0x0                                                                                            
-   0x0000000000000864 <+122>:   lea    rdi,[rip+0xaec]        # 0x1357                                                                                      
-   0x000000000000086b <+129>:   call   0x670 <puts@plt>                                                                                                     
-   0x0000000000000870 <+134>:   lea    rdi,[rip+0xb01]        # 0x1378                                                                                      
-   0x0000000000000877 <+141>:   call   0x670 <puts@plt>                                                                                                     
-   0x000000000000087c <+146>:   lea    rdi,[rip+0xb3d]        # 0x13c0                                                                                      
-   0x0000000000000883 <+153>:   call   0x670 <puts@plt>                                                                                                     
-   0x0000000000000888 <+158>:   lea    rdi,[rip+0xb9c]        # 0x142b                                                                                      
-   0x000000000000088f <+165>:   mov    eax,0x0                                                                                                              
-   0x0000000000000894 <+170>:   call   0x6a0 <printf@plt>                                                                                                   
-   0x0000000000000899 <+175>:   lea    rax,[rbp-0x170]                                                                                                      
-   0x00000000000008a0 <+182>:   mov    rsi,rax                                                                                                              
-   0x00000000000008a3 <+185>:   lea    rdi,[rip+0xb95]        # 0x143f
-   0x00000000000008aa <+192>:   mov    eax,0x0
-   0x00000000000008af <+197>:   call   0x6b0 <__isoc99_scanf@plt>
+   0x000000000000081e <+52>:    mov    DWORD PTR [rbp-0x4b0],0x0                             ;define a variable at rbp-0x4b0 and put 0 in it (32 bytes)    
+   0x0000000000000828 <+62>:    mov    DWORD PTR [rbp-0x490],0x89                            ;define a variable at rbp-0x490 and put 0x89 in it (4 bytes)       
+   0x0000000000000832 <+72>:    mov    DWORD PTR [rbp-0x48c],0xbb                            ;define a variable at rbp-0x48c and put 0xbb in it (4 bytes)
+   0x000000000000083c <+82>:    mov    DWORD PTR [rbp-0x488],0x800                           ;define a variable at rbp-0x488 and put 0x800 in it (4 bytes)         
+   0x0000000000000846 <+92>:    mov    DWORD PTR [rbp-0x484],0x0                             ;define a variable at rbp-0x484 and put 0x0 in it (4 bytes)   
+   0x0000000000000850 <+102>:   mov    DWORD PTR [rbp-0x4ac],0x0                             ;define a variable at rbp-0x4ac and put 0x0 in it (4 bytes)     
+   0x000000000000085a <+112>:   mov    DWORD PTR [rbp-0x4a8],0x0                             ;define a variable at rbp-0x4a8 and put 0x0 in it (4 bytes)         
+   0x0000000000000864 <+122>:   lea    rdi,[rip+0xaec]        # 0x1357                       ;load string at 0x1357 into rdi                                
+   0x000000000000086b <+129>:   call   0x670 <puts@plt>                                      ;print the string we just put into rdi                               
+   0x0000000000000870 <+134>:   lea    rdi,[rip+0xb01]        # 0x1378                       ;load string at 0x1378 into rdi
+   0x0000000000000877 <+141>:   call   0x670 <puts@plt>                                      ;print the string we just put into rdi        
+   0x000000000000087c <+146>:   lea    rdi,[rip+0xb3d]        # 0x13c0                       ;load string at 0x13c0 into rdi                
+   0x0000000000000883 <+153>:   call   0x670 <puts@plt>                                      ;print the string we just put into rdi                              
+   0x0000000000000888 <+158>:   lea    rdi,[rip+0xb9c]        # 0x142b                       ;load string at 0x142b into rdi ()                       
+   0x000000000000088f <+165>:   mov    eax,0x0                                               ;mov 0x0 into eax                             
+   0x0000000000000894 <+170>:   call   0x6a0 <printf@plt>                                    ;call to printf with no format      
+   0x0000000000000899 <+175>:   lea    rax,[rbp-0x170]                                       ;prepare our buffer for the scanf function call                     
+   0x00000000000008a0 <+182>:   mov    rsi,rax                                               ;put our buffer that is currently in rax into rsi                
+   0x00000000000008a3 <+185>:   lea    rdi,[rip+0xb95]        # 0x143f                       ;load string at 0x143f (%s) into rdi
+   0x00000000000008aa <+192>:   mov    eax,0x0                                               ;mov 0x0 into eax
+   0x00000000000008af <+197>:   call   0x6b0 <__isoc99_scanf@plt>                            ;get our input
 
 ```
