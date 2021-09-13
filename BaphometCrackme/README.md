@@ -167,3 +167,32 @@ Let's keep disassembling our code to understand much more what our program does,
    0x000055555540097d <+403>:   cmp    rbx,rax                                ;we compare our current loop iterator number to our strlength
    0x0000555555400980 <+406>:   jb     0x5555554008c3 <main+217>              ;jump inside our loop since our iterator is below strlength 
 ```
+OKAY... so this was a lot harder...
+**Do not worry if you haven't understand the whole block of code yet**, i will put the source of the assembly block and you can compare the source with the assembly to understand what actually happens.
+```cpp
+[rbp-0x4b4] = 0;
+while(true){
+    var1 = strlen([rbp-0x170]);
+    if(var1 <= [rbp-0x4b4]) 
+        break;
+    [rbp-0x4ac] = (int)[rbp-0x170[rbp-0x4b4]] //Here we access value at (rbp-0x170[rbp-0x4b4])
+    for([rbp-0x4b0] = 0; (int)[rbp-0x4b0] < ([rbp-0x170[ebp-0x4b4]] + 0x4a) ; [rbp-0x4b0]++){
+      
+    }
+    
+}
+```
+
+We have defined some new variables, we now have the following variables declared
+```
+[rbp-0x4c4] = argc
+[rbp-0x4d0] = argv
+[rbp-0x170] = ourInput
+[rbp-0x4b0] = 0x0    
+[rbp-0x490] = 0x89       
+[rbp-0x48c] = 0xbb 
+[rbp-0x488] = 0x800          
+[rbp-0x484] = 0x0      
+[rbp-0x4ac] = CharacterBuffer (during algorithm, used a lot in second loop)        
+[rbp-0x4a8] = We use this variable to store the 
+```
