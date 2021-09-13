@@ -104,3 +104,61 @@ Dump of assembler code for function main:
    0x00000000000008af <+197>:   call   0x6b0 <__isoc99_scanf@plt>                            ;get our input
 
 ```
+
+Yet the program has been pretty simple, we just load some values and print them, we also declare a couple of variables the program will eventually need
+```
+[rbp-0x4b0] = 0x0    
+[rbp-0x490] = 0x89       
+[rbp-0x48c] = 0xbb 
+[rbp-0x488] = 0x800          
+[rbp-0x484] = 0x0      
+[rbp-0x4ac] = 0x0        
+[rbp-0x4a8] = 0x0
+```
+Let's run the program and see in action the instructions we've just detailed
+![image](https://user-images.githubusercontent.com/61102077/133056870-f6afaa60-83f7-4aca-a22b-a3edead3daed.png)
+
+We can see all the data that's being print before our `scanf` call in this case i have input `test` to our program, then the program seems to do another `scanf` but this time it asks us `What is the Forbidden Formula ?`
+
+Let's keep disassembling our code to understand much more what our program does, once again we'll go split by split because i don't want to detail 1300 asm instructions in a row for a reverse engineering challenge.
+```asm
+   0x00005555554008b4 <+202>:   mov    DWORD PTR [rbp-0x4b4],0x0                                                                                            
+   0x00005555554008be <+212>:   jmp    0x555555400965 <main+379>                                                                                            
+   0x00005555554008c3 <+217>:   mov    eax,DWORD PTR [rbp-0x4b4]                                                                                            
+   0x00005555554008c9 <+223>:   cdqe                                                                                                                        
+   0x00005555554008cb <+225>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]                                                                                       
+   0x00005555554008d3 <+233>:   movsx  eax,al                                                                                                               
+   0x00005555554008d6 <+236>:   mov    DWORD PTR [rbp-0x484],eax                                                                                            
+   0x00005555554008dc <+242>:   mov    eax,DWORD PTR [rbp-0x484]                                                                                            
+   0x00005555554008e2 <+248>:   mov    DWORD PTR [rbp-0x4ac],eax                                                                                            
+   0x00005555554008e8 <+254>:   mov    DWORD PTR [rbp-0x4b0],0x0                                                                                            
+   0x00005555554008f2 <+264>:   jmp    0x55555540091f <main+309>                                                                                            
+   0x00005555554008f4 <+266>:   mov    eax,DWORD PTR [rbp-0x490]                                                                                            
+   0x00005555554008fa <+272>:   imul   eax,DWORD PTR [rbp-0x4ac]                                                                                            
+   0x0000555555400901 <+279>:   mov    edx,eax                                                                                                              
+   0x0000555555400903 <+281>:   mov    eax,DWORD PTR [rbp-0x48c]                                                                                            
+   0x0000555555400909 <+287>:   add    eax,edx                                                                                                              
+   0x000055555540090b <+289>:   cdq                                                                                                                         
+   0x000055555540090c <+290>:   idiv   DWORD PTR [rbp-0x488]                                                                                                
+   0x0000555555400912 <+296>:   mov    DWORD PTR [rbp-0x4ac],edx
+   0x0000555555400918 <+302>:   add    DWORD PTR [rbp-0x4b0],0x1
+   0x000055555540091f <+309>:   mov    eax,DWORD PTR [rbp-0x4b4]
+   0x0000555555400925 <+315>:   cdqe   
+   0x0000555555400927 <+317>:   movzx  eax,BYTE PTR [rbp+rax*1-0x170]
+   0x000055555540092f <+325>:   movsx  eax,al
+   0x0000555555400932 <+328>:   add    eax,0x4a
+   0x0000555555400935 <+331>:   cmp    DWORD PTR [rbp-0x4b0],eax
+   0x000055555540093b <+337>:   jl     0x5555554008f4 <main+266>
+   0x000055555540093d <+339>:   mov    eax,DWORD PTR [rbp-0x4ac]
+   0x0000555555400943 <+345>:   imul   edx,eax,0x29a
+   0x0000555555400949 <+351>:   mov    eax,DWORD PTR [rbp-0x4ac]
+   0x000055555540094f <+357>:   imul   eax,eax,0x29a
+   0x0000555555400955 <+363>:   imul   eax,edx
+   0x0000555555400958 <+366>:   add    DWORD PTR [rbp-0x4a8],eax
+   0x000055555540095e <+372>:   add    DWORD PTR [rbp-0x4b4],0x1
+   0x0000555555400965 <+379>:   mov    eax,DWORD PTR [rbp-0x4b4]
+   0x000055555540096b <+385>:   movsxd rbx,eax
+   0x000055555540096e <+388>:   lea    rax,[rbp-0x170]
+   0x0000555555400975 <+395>:   mov    rdi,rax
+   0x0000555555400978 <+398>:   call   0x555555400680 <strlen@plt>
+```
